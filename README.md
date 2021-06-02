@@ -36,7 +36,7 @@ operator <operator> (position: <pos>): insufficient parameters
 
 ## Attention
 - 'undo' operations can work on an empty stack. It will do nothing.
-- 'undo' opeartions can used to undo 'clear' opeartion.
+- 'undo' opeartions can be used to undo 'clear' opeartion.
   
   For example:
   
