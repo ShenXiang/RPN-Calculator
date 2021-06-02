@@ -14,7 +14,6 @@ import com.rpncalc.operator.math.SubtractionOperator;
 import com.rpncalc.stack.OperatorValueStack;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +25,14 @@ public class Calculator {
     private Map<String, Operator> operatorMap;
 
     private String[] tokens;
-    private int tokenCursor = 0;
+    private int tokenCursor;
+    private String express;
 
     public Calculator() {
+        tokens = new String[0];
+        tokenCursor = 0;
+        express = "";
+
         initOperatorMap();
     }
 
@@ -50,12 +54,35 @@ public class Calculator {
         }
     }
 
+    private int getOriginalTokenPos() {
+
+        int tokenIndex = 0;
+        int pos = 0;
+
+        while (pos < express.length()) {
+
+            if (express.charAt(pos) != ' ') {
+                if (tokenIndex == tokenCursor) {
+                    return pos + 1;
+                }
+                ++tokenIndex;
+                while (pos < express.length() && express.charAt(pos) != ' '){
+                    ++pos;
+                }
+            }
+            ++pos;
+        }
+
+        return -1;
+    }
+
+
     private void processOperator(Operator operator, OperatorTypeEnum type) throws BusinessException {
 
         int paramNum = type.getParamNum();
         if (stack.size() < paramNum) {
             String message = String.format(
-                    ErrorCodeEnum.INSUFFICIENT_PARAMETERS.getMessage(), tokens[tokenCursor], tokenCursor + 1);
+                    ErrorCodeEnum.INSUFFICIENT_PARAMETERS.getMessage(), tokens[tokenCursor], getOriginalTokenPos());
 
             throw new BusinessException(ErrorCodeEnum.INSUFFICIENT_PARAMETERS, message);
         }
@@ -72,6 +99,7 @@ public class Calculator {
 
             case 2:
                 stack.startBatch();
+
                 // The top element is right
                 BigDecimal right = stack.pop();
                 BigDecimal left = stack.pop();
@@ -101,7 +129,7 @@ public class Calculator {
         } catch (NumberFormatException e) {
             throw new BusinessException(
                     ErrorCodeEnum.INVALID_TOKEN,
-                    String.format(ErrorCodeEnum.INVALID_TOKEN.getMessage(), token, tokenCursor + 1));
+                    String.format(ErrorCodeEnum.INVALID_TOKEN.getMessage(), token, getOriginalTokenPos()));
         }
     }
 
@@ -129,8 +157,9 @@ public class Calculator {
             return new ExecuteResult(this);
         }
 
-        tokens = expression.split("\\s+");
+        tokens = expression.trim().split("\\s+");
         tokenCursor = 0;
+        express = expression;
 
         try {
             for (String token : tokens) {

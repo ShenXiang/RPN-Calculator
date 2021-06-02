@@ -15,7 +15,7 @@ public class Console {
 
         Calculator calculator = new Calculator();
         while (true) {
-            String line = new Scanner(System.in).nextLine().trim();
+            String line = new Scanner(System.in).nextLine();
 
             if ("q".equals(line)) {
                 break;
