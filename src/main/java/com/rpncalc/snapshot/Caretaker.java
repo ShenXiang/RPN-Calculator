@@ -7,9 +7,8 @@ public class Caretaker {
 
     private Deque<Memento> mementos = new ArrayDeque<>();
 
-    public Caretaker add(Memento memento) {
+    public void add(Memento memento) {
         mementos.addLast(memento);
-        return this;
     }
 
     public Caretaker undo() {
