@@ -9,17 +9,17 @@ import lombok.Getter;
  * @author shenxiang
  */
 @Getter
-public class BusinessException extends Exception {
+public class CalculatorException extends Exception {
 
-    private final String code;
+    private final Integer code;
     private final String message;
 
-    public BusinessException(ErrorCodeEnum code) {
+    public CalculatorException(ErrorCodeEnum code) {
         this.message = code.getMessage();
         this.code = code.getCode();
     }
 
-    public BusinessException(ErrorCodeEnum code, String message) {
+    public CalculatorException(ErrorCodeEnum code, String message) {
         this.message = message;
         this.code = code.getCode();
     }

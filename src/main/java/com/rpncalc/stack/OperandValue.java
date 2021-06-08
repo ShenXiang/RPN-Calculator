@@ -9,7 +9,7 @@ import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
- * Now ValueElement only contains value property.
+ * Now OperandValue only contains value property.
  * However, this class is designed to extend the behaviors.
  *
  * You can implement your own behavior like customizing the colour of the value, etc
@@ -18,7 +18,7 @@ import java.util.Objects;
  */
 @AllArgsConstructor
 @Getter
-public class ValueElement {
+public class OperandValue {
 
     private BigDecimal value;
 

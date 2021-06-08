@@ -1,50 +1,61 @@
 package com.rpncalc;
 
-
 import com.rpncalc.exception.ErrorCodeEnum;
 import lombok.Getter;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 
 @Getter
 public class ExecuteResult {
-    private String errorMsg;
-
-    private String errorCode;
 
     private String result = "";
 
-    private Calculator calculator;
+    private int tokenPos = 0;
+
+    private ErrorCodeEnum error = ErrorCodeEnum.SUCCESS;
+
+    private RpnExpression rpnExpression;
+
+    private String token = "";
 
     private static final String IGNORED_TOKEN_REMAINED_FORMAT =
             "(the %s %s not pushed on to the stack due to the previous error)";
 
-    public ExecuteResult(Calculator calculator) {
-        this.calculator = calculator;
-        this.errorCode = ErrorCodeEnum.SUCCESS.getCode();
+    public ExecuteResult(RpnExpression rpnExpression) {
+        this.rpnExpression = rpnExpression;
     }
 
-    public ExecuteResult(Calculator calculator, String errorMsg, String errorCode, String result){
-        this(calculator);
-        this.result = result;
-        this.errorMsg = errorMsg;
-        this.errorCode = errorCode;
+    public void setToken(String token, int tokenPos) {
+        this.token = token;
+        this.tokenPos = tokenPos;
     }
 
-    public ExecuteResult(Calculator calculator, String result){
-        this(calculator);
+    public void setResult(String result) {
         this.result = result;
-        this.errorCode = ErrorCodeEnum.SUCCESS.getCode();
+    }
+
+    public void setError(Integer error) {
+        this.error = ErrorCodeEnum.valueOf(error);
+    }
+
+    public String getErrorMessage() {
+        int originalCharPos = rpnExpression.getExpressionCharPos(tokenPos);
+
+        if (error == ErrorCodeEnum.INSUFFICIENT_PARAMETERS || error == ErrorCodeEnum.INVALID_TOKEN) {
+            return String.format(error.getMessage(), token, originalCharPos);
+
+        } else {
+            return error.getMessage();
+        }
     }
 
     public void display() {
-        if (StringUtils.isNotBlank(errorMsg)) {
-            System.out.println(errorMsg);
+        if (!isSuccess()) {
+            System.out.println(getErrorMessage());
         }
 
         System.out.println("stack: " + result);
 
-        String[] remainedTokens = calculator.getRemainedTokens();
+        String[] remainedTokens = rpnExpression.getTokens(tokenPos);
         if (ArrayUtils.isEmpty(remainedTokens)) {
             return;
         }
@@ -54,6 +65,6 @@ public class ExecuteResult {
     }
 
     public boolean isSuccess() {
-        return errorCode.equals(ErrorCodeEnum.SUCCESS.getCode());
+        return ErrorCodeEnum.SUCCESS.equals(error);
     }
 }

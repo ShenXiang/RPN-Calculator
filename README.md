@@ -15,9 +15,9 @@ This project is a Reverse Polish Notation(RPN) calculator. It accepts a string w
 
 - Operators pop their parameters off the stack, and push their results back onto the stack.
 
-- The ‘clear’ operator removes all items from the stack.
+- The ‘clear’ operation removes all items from the stack.
 
-- The ‘undo’ operator undoes the previous operation. “undo undo” will undo the previo us two operations.
+- The ‘undo’ operation undoes the previous operation. “undo undo” will undo the previo us two operations.
 
 - sqrt performs a square root on the top item from the stack.
 
@@ -29,8 +29,8 @@ This project is a Reverse Polish Notation(RPN) calculator. It accepts a string w
 
 - All numbers should be formatted as plain decimal strings (ie. no engineering formatting).
 
-- If an operator cannot find a sufficient number of parameters on the stack, a warning is displayed:
-operator <operator> (position: <pos>): insufficient parameters
+- If an operation cannot find a sufficient number of parameters on the stack, a warning is displayed:
+operation <operation> (position: <pos>): insufficient parameters
   
 - After displaying the warning, all further processing of the string terminates and the current state of the stack is displayed.
 
@@ -52,7 +52,7 @@ operator <operator> (position: <pos>): insufficient parameters
 - More math operators, such as n!, COS, ATAN, etc
   - Solution:
     - Implements your own class that implments 'Operator' interface
-    - Add your operator into 'OperatorTypeEnums' enum
+    - Add your operation into 'OperatorTypeEnums' enum
     - Define your error code into 'ErrorCodeEnum' enum
   
 - Customize the colour of each number in the stack depends on it position.

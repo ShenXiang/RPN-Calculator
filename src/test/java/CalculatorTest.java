@@ -1,22 +1,31 @@
 import com.rpncalc.Calculator;
 import com.rpncalc.Constant;
 import com.rpncalc.ExecuteResult;
-import com.rpncalc.exception.BusinessException;
+import com.rpncalc.exception.CalculatorException;
 import com.rpncalc.exception.ErrorCodeEnum;
-import com.rpncalc.operator.math.AdditionOperator;
-import com.rpncalc.operator.math.DivisionOperator;
-import com.rpncalc.operator.math.MultiplicationOperator;
-import com.rpncalc.operator.math.SqrtOperator;
-import com.rpncalc.operator.math.SubtractionOperator;
-import org.junit.Test;
+import com.rpncalc.operator.OperationFactory;
+import com.rpncalc.operator.math.AddOperation;
+import com.rpncalc.operator.math.DivOperation;
+import com.rpncalc.operator.math.MulOperation;
+import com.rpncalc.operator.math.SubOperation;
+import com.rpncalc.snapshot.Caretaker;
+import com.rpncalc.stack.OperandStackImpl;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CalculatorTest {
+class CalculatorTest {
+
+    private OperationFactory operationFactory;
+
+    public CalculatorTest() {
+        operationFactory = new OperationFactory(new OperandStackImpl(), new Caretaker());
+    }
 
     private static String randomSpaces() {
         Random r = new Random();
@@ -31,59 +40,71 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testPrecision() throws BusinessException {
+    void testPrecision() throws CalculatorException {
         Random r = new Random();
 
-        BigDecimal left = BigDecimal.valueOf(r.nextDouble());
-        BigDecimal right = BigDecimal.valueOf(r.nextDouble());
+        BigDecimal[] params = {
+            BigDecimal.valueOf(r.nextDouble()).setScale(
+                Constant.DECIMAL_STORE_PRECISION.getPrecision(),
+                RoundingMode.HALF_UP),
 
-        BigDecimal result = new AdditionOperator().execute(left, right);
-        assertEquals(result.scale(), Constant.DECIMAL_STORE_PRECISION.getPrecision());
+            BigDecimal.valueOf(r.nextDouble()).setScale(
+                Constant.DECIMAL_STORE_PRECISION.getPrecision(),
+                RoundingMode.HALF_UP)
+        };
 
-        result = new SubtractionOperator().execute(left, right);
-        assertEquals(result.scale(), Constant.DECIMAL_STORE_PRECISION.getPrecision());
+        BigDecimal result = operationFactory.create(AddOperation.TOKEN).calculate(params);
+        assertTrue(result.scale() >= Constant.DECIMAL_STORE_PRECISION.getPrecision());
 
-        result = new MultiplicationOperator().execute(left, right);
-        assertEquals(result.scale(), Constant.DECIMAL_STORE_PRECISION.getPrecision());
+        result = operationFactory.create(SubOperation.TOKEN).calculate(params);
+        assertTrue(result.scale() >= Constant.DECIMAL_STORE_PRECISION.getPrecision());
 
-        result = new DivisionOperator().execute(left, right);
-        assertEquals(result.scale(), Constant.DECIMAL_STORE_PRECISION.getPrecision());
+        result = operationFactory.create(MulOperation.TOKEN).calculate(params);
+        assertTrue(result.scale() >= Constant.DECIMAL_STORE_PRECISION.getPrecision());
 
-        result = new SqrtOperator().execute(left);
-        assertEquals(result.scale(), Constant.DECIMAL_STORE_PRECISION.getPrecision());
+        result = operationFactory.create(DivOperation.TOKEN).calculate(params);
+        assertTrue(result.scale() >= Constant.DECIMAL_STORE_PRECISION.getPrecision());
     }
 
     @Test
-    public void testInvalidToken() {
+    void testInvalidToken() {
         Calculator calculator = new Calculator();
 
         ExecuteResult result = calculator.execute("2 3 invalid invalid2");
 
         // Through "invalid" token is broken, it will affect those already parsed tokens.
         assertEquals("2 3", result.getResult());
-        assertEquals(ErrorCodeEnum.INVALID_TOKEN.getCode(), result.getErrorCode());
-        assertEquals("token invalid (position: 3): invalid token", result.getErrorMsg());
+        assertEquals(ErrorCodeEnum.INVALID_TOKEN, result.getError());
+        assertEquals("token invalid (position: 5): invalid token", result.getErrorMessage());
+
+        calculator.execute("clear");
+        result = calculator.execute("2 3+");
+
+        // Through "invalid" token is broken, it will affect those already parsed tokens.
+        assertEquals("2", result.getResult());
+        assertEquals(ErrorCodeEnum.INVALID_TOKEN, result.getError());
+        assertEquals("token 3+ (position: 3): invalid token", result.getErrorMessage());
     }
 
     @Test
-    public void testInsufficientParameters() {
+    void testInsufficientParameters() {
         Calculator calculator = new Calculator();
 
         ExecuteResult result = calculator.execute("5 +");
 
-        assertEquals(ErrorCodeEnum.INSUFFICIENT_PARAMETERS.getCode(), result.getErrorCode());
-        assertEquals("operator + (position: 2): insufficient parameters", result.getErrorMsg());
+        assertEquals(ErrorCodeEnum.INSUFFICIENT_PARAMETERS, result.getError());
+        assertEquals("operator + (position: 3): insufficient parameters", result.getErrorMessage());
     }
 
     @Test
-    public void testClearEmpty() {
+    void testClearEmptyStack() {
         Calculator calculator = new Calculator();
         ExecuteResult result = calculator.execute("clear");
         assertTrue(result.getResult().isEmpty());
     }
 
     @Test
-    public void testMultipleSpaces() {
+    void testRpnWithSpaces() {
         Calculator calculator = new Calculator();
 
         String spaces = randomSpaces();
@@ -94,26 +115,14 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testNoSpaces() throws BusinessException {
-        Calculator calculator = new Calculator();
-
-        ExecuteResult result = calculator.execute("2 3+");
-
-        // Through "invalid" token is broken, it will affect those already parsed tokens.
-        assertEquals("2", result.getResult());
-        assertEquals(ErrorCodeEnum.INVALID_TOKEN.getCode(), result.getErrorCode());
-        assertEquals("token 3+ (position: 2): invalid token", result.getErrorMsg());
-    }
-
-    @Test
-    public void testNullInput() {
+    void testNullRpn() {
         Calculator calculator = new Calculator();
         ExecuteResult result = calculator.execute(null);
         assertTrue(result.isSuccess());
     }
 
     @Test
-    public void testEmptyInput() {
+    void testBlankRpn() {
         Calculator calculator = new Calculator();
 
         ExecuteResult result = calculator.execute("");
@@ -122,5 +131,4 @@ public class CalculatorTest {
         result = calculator.execute(randomSpaces());
         assertTrue(result.getResult().isEmpty());
     }
-
 }

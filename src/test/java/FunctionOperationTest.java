@@ -1,27 +1,27 @@
 import com.rpncalc.Calculator;
 import com.rpncalc.ExecuteResult;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FunctionOperatorTest {
+class FunctionOperationTest {
 
     @Test
-    public void testClear() {
+    void testNormalClear() {
         Calculator calculator = new Calculator();
         assertEquals("1 2 3", calculator.execute("1 2 3").getResult());
         assertEquals("", calculator.execute("clear").getResult());
     }
 
     @Test
-    public void testEmptyClear() {
+    void testClearEmptyStack() {
         Calculator calculator = new Calculator();
         assertEquals("", calculator.execute("clear").getResult());
     }
 
     @Test
-    public void testUndoOperator() {
+    void testNormalUndo() {
         Calculator calculator = new Calculator();
 
         ExecuteResult result = calculator.execute("4 2 +");
@@ -50,24 +50,21 @@ public class FunctionOperatorTest {
         assertEquals("2", result.getResult());
         result = calculator.execute("undo");
         assertEquals("4 2", result.getResult());
-    }
 
-    @Test
-    public void testUndoValue() {
-        Calculator calculator = new Calculator();
-        ExecuteResult result = calculator.execute("5 4 3 2 undo undo undo");
+        calculator.execute("clear");
+        result = calculator.execute("5 4 3 2 undo undo undo");
         assertEquals("5", result.getResult());
     }
 
     @Test
-    public void testContinuesUndo() {
+    void testContinuesUndo() {
         Calculator calculator = new Calculator();
         ExecuteResult result = calculator.execute("5 4 3 2 * undo undo undo");
         assertEquals("5 4", result.getResult());
     }
 
     @Test
-    public void testUndoClear() {
+    void testUndoAfterClear() {
         Calculator calculator = new Calculator();
 
         ExecuteResult result = calculator.execute("5 4 3 2 1 clear undo");
