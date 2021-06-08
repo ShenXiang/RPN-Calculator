@@ -28,7 +28,8 @@ class MementoTest {
         }
 
         for (int i = 0; i < count; ++i) {
-            assertEquals(count - i, caretaker.undo().getMemento().getStack().size());
+            assertEquals(count - i, caretaker.getMemento().getStack().size());
+            caretaker.undo();
         }
     }
 

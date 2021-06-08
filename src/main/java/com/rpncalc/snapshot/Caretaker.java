@@ -1,8 +1,5 @@
 package com.rpncalc.snapshot;
 
-import com.rpncalc.exception.CalculatorException;
-import com.rpncalc.exception.ErrorCodeEnum;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 

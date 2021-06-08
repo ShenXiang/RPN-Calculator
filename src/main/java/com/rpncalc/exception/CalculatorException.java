@@ -3,7 +3,7 @@ package com.rpncalc.exception;
 import lombok.Getter;
 
 /**
- * BusinessException
+ * CalculatorException
  *
  * Common exception.
  * @author shenxiang
