@@ -28,7 +28,7 @@ public class Calculator {
         this.operationFactory = new OperationFactory(operandStack, caretaker);
     }
 
-    private void processOperator(Operation operation) throws CalculatorException {
+    private void processOperator(Operation operation) {
 
         int operandNum = operation.operandNum();
 
@@ -49,7 +49,7 @@ public class Calculator {
         }
     }
 
-    private void processNumber(String token) throws CalculatorException {
+    private void processNumber(String token) {
         try {
             BigDecimal value = new BigDecimal(token);
             operandStack.push(new OperandValue(value));
@@ -59,7 +59,7 @@ public class Calculator {
         }
     }
 
-    private void processToken(String token) throws CalculatorException {
+    private void processToken(String token) {
 
         Operation operation = operationFactory.create(token);
         if (operation != null) {

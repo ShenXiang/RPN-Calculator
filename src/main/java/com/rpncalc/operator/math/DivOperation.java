@@ -15,7 +15,7 @@ public class DivOperation extends AbstractMathOperation {
     }
 
     @Override
-    public BigDecimal calculate(BigDecimal[] params) throws CalculatorException{
+    public BigDecimal calculate(BigDecimal[] params) {
         if (BigDecimal.ZERO.compareTo(params[1]) == 0) {
             throw new CalculatorException(ErrorCodeEnum.DIVISION_BY_ZERO);
         }

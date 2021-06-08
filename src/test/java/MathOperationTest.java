@@ -28,7 +28,7 @@ class MathOperationTest {
     }
 
     @Test
-    void testUnaryOperation() throws CalculatorException {
+    void testUnaryOperation() {
         Random r = new Random();
         BigDecimal[] params = {
                 BigDecimal.valueOf(r.nextDouble())
@@ -42,7 +42,7 @@ class MathOperationTest {
     }
 
     @Test
-    void testBinaryOperation() throws CalculatorException {
+    void testBinaryOperation() {
         Random r = new Random();
 
         BigDecimal[] params = {
@@ -93,7 +93,7 @@ class MathOperationTest {
     }
 
     @Test
-    void testSqrtInfiniteDecimal() throws CalculatorException {
+    void testSqrtInfiniteDecimal() {
 
         BigDecimal[] params = {
                 BigDecimal.ONE, new BigDecimal("3")

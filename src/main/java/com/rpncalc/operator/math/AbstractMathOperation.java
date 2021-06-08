@@ -16,12 +16,12 @@ public abstract class AbstractMathOperation implements Operation {
     }
 
     @Override
-    public void doFunction() throws CalculatorException {
+    public void doFunction() {
         throw new CalculatorException(ErrorCodeEnum.INTERNAL_ERROR);
     }
 
     @Override
-    public BigDecimal calculate(BigDecimal[] params) throws CalculatorException {
+    public BigDecimal calculate(BigDecimal[] params) {
         return function.apply(params);
     }
 

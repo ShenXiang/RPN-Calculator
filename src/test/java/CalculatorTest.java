@@ -1,7 +1,6 @@
 import com.rpncalc.Calculator;
 import com.rpncalc.Constant;
 import com.rpncalc.ExecuteResult;
-import com.rpncalc.exception.CalculatorException;
 import com.rpncalc.exception.ErrorCodeEnum;
 import com.rpncalc.operator.OperationFactory;
 import com.rpncalc.operator.math.AddOperation;
@@ -40,7 +39,7 @@ class CalculatorTest {
     }
 
     @Test
-    void testPrecision() throws CalculatorException {
+    void testPrecision() {
         Random r = new Random();
 
         BigDecimal[] params = {
@@ -104,7 +103,7 @@ class CalculatorTest {
     }
 
     @Test
-    void testRpnWithSpaces() {
+    void testRpnWithMultiSpaces() {
         Calculator calculator = new Calculator();
 
         String spaces = randomSpaces();

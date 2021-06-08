@@ -1,7 +1,5 @@
 package com.rpncalc.stack;
 
-import com.rpncalc.exception.CalculatorException;
-
 public interface OperandStack extends Restorable, Cloneable{
 
     /**
@@ -13,10 +11,9 @@ public interface OperandStack extends Restorable, Cloneable{
     /**
      * pop n(count) elements from stack
      *
-     * @return poped values in reserved way.
-     * @throws CalculatorException no enough elements
+     * @return pop values in reserved way.
      */
-    OperandValue[] pop(int count) throws CalculatorException;
+    OperandValue[] pop(int count);
 
     /**
      * clear all elements

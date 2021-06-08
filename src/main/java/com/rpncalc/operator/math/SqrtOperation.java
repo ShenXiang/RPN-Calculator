@@ -21,7 +21,7 @@ public class SqrtOperation extends AbstractMathOperation {
     }
 
     @Override
-    public BigDecimal calculate(BigDecimal... params) throws CalculatorException {
+    public BigDecimal calculate(BigDecimal... params) {
         int compareZero = params[0].compareTo(BigDecimal.ZERO);
 
         if (compareZero < 0) {

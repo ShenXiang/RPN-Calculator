@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public abstract class AbstractOperation implements Operation {
 
     @Override
-    public BigDecimal calculate(BigDecimal[] params) throws CalculatorException {
+    public BigDecimal calculate(BigDecimal[] params) {
         throw new CalculatorException(ErrorCodeEnum.INTERNAL_ERROR);
     }
 

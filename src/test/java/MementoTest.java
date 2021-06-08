@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class MementoTest {
 
     @Test
-    void testNormal() {
+    void testRestoreMultiMementos() {
         Caretaker caretaker = new Caretaker();
 
         Deque<OperandValue> queue = new ArrayDeque<>();

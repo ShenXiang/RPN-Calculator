@@ -17,7 +17,7 @@ public class UndoOperation extends AbstractOperation {
     }
 
     @Override
-    public  String symbol() {
+    public String symbol() {
         return TOKEN;
     }
 

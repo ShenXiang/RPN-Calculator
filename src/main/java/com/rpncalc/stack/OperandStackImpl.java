@@ -30,7 +30,7 @@ public class OperandStackImpl implements OperandStack {
     }
 
     @Override
-    public OperandValue[] pop(int count) throws CalculatorException {
+    public OperandValue[] pop(int count) {
         if (values.size() < count) {
             throw new CalculatorException(ErrorCodeEnum.INSUFFICIENT_PARAMETERS);
         }

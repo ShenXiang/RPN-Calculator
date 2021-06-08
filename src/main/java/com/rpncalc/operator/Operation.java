@@ -1,9 +1,6 @@
 package com.rpncalc.operator;
 
-import com.rpncalc.exception.CalculatorException;
-
 import java.math.BigDecimal;
-import java.util.function.Consumer;
 
 public interface Operation {
 
@@ -22,14 +19,11 @@ public interface Operation {
      *
      * @param params varying parameter list
      * @return operator return value
-     * @throws CalculatorException common exception
      */
-    BigDecimal calculate(BigDecimal[] params) throws CalculatorException;
+    BigDecimal calculate(BigDecimal[] params);
 
     /**
      * Execute no args operations without return type
-     *
-     * @throws CalculatorException common exception
      */
-    void doFunction() throws CalculatorException;
+    void doFunction();
 }
