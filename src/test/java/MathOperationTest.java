@@ -3,6 +3,7 @@ import com.rpncalc.exception.CalculatorException;
 import com.rpncalc.exception.ErrorCodeEnum;
 import com.rpncalc.operator.Operation;
 import com.rpncalc.operator.OperationFactory;
+import com.rpncalc.operator.OperationFactoryImpl;
 import com.rpncalc.operator.math.AddOperation;
 import com.rpncalc.operator.math.DivOperation;
 import com.rpncalc.operator.math.MulOperation;
@@ -24,7 +25,7 @@ class MathOperationTest {
     private OperationFactory operationFactory;
 
     public MathOperationTest() {
-        operationFactory = new OperationFactory(new OperandStackImpl(), new Caretaker());
+        operationFactory = new OperationFactoryImpl(new OperandStackImpl(), new Caretaker());
     }
 
     @Test

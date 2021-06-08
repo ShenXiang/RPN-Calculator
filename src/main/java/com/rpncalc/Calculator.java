@@ -4,6 +4,7 @@ import com.rpncalc.exception.CalculatorException;
 import com.rpncalc.exception.ErrorCodeEnum;
 import com.rpncalc.operator.Operation;
 import com.rpncalc.operator.OperationFactory;
+import com.rpncalc.operator.OperationFactoryImpl;
 import com.rpncalc.operator.function.UndoOperation;
 import com.rpncalc.snapshot.Caretaker;
 import com.rpncalc.snapshot.Memento;
@@ -25,7 +26,7 @@ public class Calculator {
     public Calculator() {
         this.operandStack = new OperandStackImpl();
         this.caretaker = new Caretaker();
-        this.operationFactory = new OperationFactory(operandStack, caretaker);
+        this.operationFactory = new OperationFactoryImpl(operandStack, caretaker);
     }
 
     private void processOperator(Operation operation) {

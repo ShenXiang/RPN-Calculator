@@ -1,8 +1,7 @@
 package com.rpncalc;
 
 import org.apache.commons.lang3.ArrayUtils;
-
-import java.util.Objects;
+import org.apache.commons.lang3.StringUtils;
 
 public class RpnExpression {
 
@@ -11,7 +10,7 @@ public class RpnExpression {
 
     public RpnExpression(String rpn) {
 
-        if (Objects.isNull(rpn)) {
+        if (StringUtils.isBlank(rpn)) {
             tokens = new String[0];
             this.ronExpression = "";
 
