@@ -56,4 +56,22 @@ class RpnExpressionTest {
         assertEquals("multiple", tokens[0]);
         assertEquals("tokens", tokens[1]);
     }
+
+    @Test
+    void testOriginalPos() {
+        RpnExpression expression = new RpnExpression("1 2 3 * 5 + * * 6 5");
+        assertEquals(15, expression.getExpressionCharPos(7));
+    }
+
+    @Test
+    void testOriginalPosWithMoreSpaces() {
+        RpnExpression expression = new RpnExpression(" 1  invalid ");
+        assertEquals(5, expression.getExpressionCharPos(1));
+    }
+
+    @Test
+    void testOriginalPosWith() {
+        RpnExpression expression = new RpnExpression(" 1  invalid ");
+        assertEquals(5, expression.getExpressionCharPos(1));
+    }
 }

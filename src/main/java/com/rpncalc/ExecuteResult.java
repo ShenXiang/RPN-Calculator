@@ -4,14 +4,17 @@ import com.rpncalc.exception.ErrorCodeEnum;
 import lombok.Getter;
 import org.apache.commons.lang3.ArrayUtils;
 
-@Getter
+import java.util.Objects;
+
 public class ExecuteResult {
 
+    @Getter
     private String result = "";
 
-    private int tokenPos = 0;
-
+    @Getter
     private ErrorCodeEnum error = ErrorCodeEnum.SUCCESS;
+
+    private int tokenPos = 0;
 
     private RpnExpression rpnExpression;
 
@@ -38,6 +41,10 @@ public class ExecuteResult {
     }
 
     public String getErrorMessage() {
+        if (Objects.isNull(rpnExpression)) {
+            return "";
+        }
+
         int originalCharPos = rpnExpression.getExpressionCharPos(tokenPos);
 
         if (error == ErrorCodeEnum.INSUFFICIENT_PARAMETERS || error == ErrorCodeEnum.INVALID_TOKEN) {

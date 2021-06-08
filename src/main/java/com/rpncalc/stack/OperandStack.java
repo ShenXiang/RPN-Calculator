@@ -1,6 +1,6 @@
 package com.rpncalc.stack;
 
-public interface OperandStack extends Restorable, Cloneable{
+public interface OperandStack extends Restorable {
 
     /**
      * push a value to the top of the stack
