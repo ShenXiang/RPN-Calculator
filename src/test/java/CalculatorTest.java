@@ -12,7 +12,7 @@ class CalculatorTest {
 
     private static String randomSpaces() {
         Random r = new Random();
-        int spaceCount = r.nextInt(100);
+        int spaceCount = r.nextInt(100) + 1;
         StringBuilder builder = new StringBuilder(spaceCount);
 
         for (int i = 0; i < spaceCount; ++i) {
