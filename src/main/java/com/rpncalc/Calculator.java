@@ -94,10 +94,8 @@ public class Calculator {
         for(int pos = 0; pos < tokens.length; ++pos) {
 
             try {
-                String token = tokens[pos];
-                result.setToken(token, pos);
-
-                processToken(token);
+                result.setTokenPos(pos);
+                processToken(tokens[pos]);
 
             } catch (CalculatorException e) {
                 result.setError(e.getCode());

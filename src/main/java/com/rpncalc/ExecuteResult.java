@@ -18,8 +18,6 @@ public class ExecuteResult {
 
     private RpnExpression rpnExpression;
 
-    private String token = "";
-
     private static final String IGNORED_TOKEN_REMAINED_FORMAT =
             "(the %s %s not pushed on to the stack due to the previous error)";
 
@@ -27,8 +25,7 @@ public class ExecuteResult {
         this.rpnExpression = rpnExpression;
     }
 
-    public void setToken(String token, int tokenPos) {
-        this.token = token;
+    public void setTokenPos(int tokenPos) {
         this.tokenPos = tokenPos;
     }
 
@@ -48,6 +45,13 @@ public class ExecuteResult {
         int originalCharPos = rpnExpression.getExpressionCharPos(tokenPos);
 
         if (error == ErrorCodeEnum.INSUFFICIENT_PARAMETERS || error == ErrorCodeEnum.INVALID_TOKEN) {
+
+            String[] tokens = rpnExpression.getTokens();
+            String token = "";
+            if (tokenPos < tokens.length) {
+                token = tokens[tokenPos];
+            }
+
             return String.format(error.getMessage(), token, originalCharPos);
 
         } else {

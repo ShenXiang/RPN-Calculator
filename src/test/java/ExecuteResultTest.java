@@ -21,7 +21,7 @@ class ExecuteResultTest {
 
         executeResult.setResult("11");
         executeResult.setError(INSUFFICIENT_PARAMETERS.getCode());
-        executeResult.setToken("*", 7);
+        executeResult.setTokenPos(7);
         assertEquals(
                 "operator * (position: 15): insufficient parameters",
                 executeResult.getErrorMessage());
@@ -35,7 +35,7 @@ class ExecuteResultTest {
 
         executeResult.setResult("1");
         executeResult.setError(INVALID_TOKEN.getCode());
-        executeResult.setToken("invalid", 1);
+        executeResult.setTokenPos(1);
         assertEquals(
                 "token invalid (position: 4): invalid token",
                 executeResult.getErrorMessage());
