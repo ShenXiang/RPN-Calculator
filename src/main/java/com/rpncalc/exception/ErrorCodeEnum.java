@@ -25,7 +25,7 @@ public enum ErrorCodeEnum {
     /**
      * Arithmetic Errors
      */
-    DIVISION_BY_ZERO(-3, "Division by zero"),
+    DIVIDE_BY_ZERO(-3, "Division by zero"),
     NEGATIVE_SQUARE_ROOT(-4, "Square root is negative"),
 
     /**

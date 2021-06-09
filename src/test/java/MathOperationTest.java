@@ -67,7 +67,7 @@ class MathOperationTest {
     }
 
     @Test
-    void testDivZero() {
+    void testDivideBZero() {
 
         BigDecimal[] params = {
                 BigDecimal.ONE, BigDecimal.ZERO
@@ -76,7 +76,7 @@ class MathOperationTest {
         CalculatorException exception = assertThrows(
                 CalculatorException.class,
                 () -> operationFactory.create(DivOperation.TOKEN).calculate(params));
-        assertEquals(exception.getCode(), ErrorCodeEnum.DIVISION_BY_ZERO.getCode());
+        assertEquals(exception.getCode(), ErrorCodeEnum.DIVIDE_BY_ZERO.getCode());
     }
 
     @Test
