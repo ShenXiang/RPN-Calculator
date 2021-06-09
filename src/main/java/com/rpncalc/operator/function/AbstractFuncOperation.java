@@ -6,7 +6,7 @@ import com.rpncalc.operator.Operation;
 
 import java.math.BigDecimal;
 
-public abstract class AbstractOperation implements Operation {
+public abstract class AbstractFuncOperation implements Operation {
 
     @Override
     public BigDecimal calculate(BigDecimal[] params) {

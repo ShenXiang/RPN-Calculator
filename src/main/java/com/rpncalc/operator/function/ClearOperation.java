@@ -2,7 +2,7 @@ package com.rpncalc.operator.function;
 
 import com.rpncalc.stack.OperandStack;
 
-public class ClearOperation extends AbstractOperation {
+public class ClearOperation extends AbstractFuncOperation {
 
     public static final String TOKEN = "clear";
 

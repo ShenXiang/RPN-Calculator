@@ -3,7 +3,7 @@ package com.rpncalc.operator.function;
 import com.rpncalc.snapshot.Caretaker;
 import com.rpncalc.stack.OperandStack;
 
-public class UndoOperation extends AbstractOperation {
+public class UndoOperation extends AbstractFuncOperation {
 
     public static final String TOKEN = "undo";
 
