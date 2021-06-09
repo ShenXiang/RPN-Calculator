@@ -67,7 +67,7 @@ class CalculatorTest {
     void testNullRpn() {
         Calculator calculator = new Calculator();
         ExecuteResult result = calculator.execute(null);
-        assertTrue(result.isSuccess());
+        assertEquals(ErrorCodeEnum.SUCCESS, result.getError());
     }
 
     @Test

@@ -55,7 +55,10 @@ public class ExecuteResult {
         }
     }
 
-    public void display() {
+    /**
+     * Print error message, current stack elements and unresolved tokens to console.
+     */
+    public void print() {
         if (!isSuccess()) {
             System.out.println(getErrorMessage());
         }
@@ -71,7 +74,7 @@ public class ExecuteResult {
         System.out.println(String.format(IGNORED_TOKEN_REMAINED_FORMAT, str, remainedTokens.length > 1 ? "were": "was"));
     }
 
-    public boolean isSuccess() {
+    private boolean isSuccess() {
         return ErrorCodeEnum.SUCCESS.equals(error);
     }
 }

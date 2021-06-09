@@ -22,7 +22,7 @@ public class Console {
 
             }
             ExecuteResult result = calculator.execute(line);
-            result.display();
+            result.print();
         }
     }
 }
