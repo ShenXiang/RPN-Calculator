@@ -45,7 +45,15 @@ public class OperationFactoryImpl implements OperationFactory {
                     );
                 }),
 
-                new SqrtOperation(params -> params[0].sqrt(Constant.DECIMAL_STORE_PRECISION)),
+                new SqrtOperation(params -> {
+                        int compareZero = params[0].compareTo(BigDecimal.ZERO);
+
+                        if (compareZero < 0) {
+                            throw new CalculatorException(ErrorCodeEnum.NEGATIVE_SQUARE_ROOT);
+                        }
+                        return params[0].sqrt(Constant.DECIMAL_STORE_PRECISION);
+                    }
+                ),
 
                 new ClearOperation(stack),
                 new UndoOperation(stack, caretaker)
