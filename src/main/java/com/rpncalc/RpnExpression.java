@@ -6,17 +6,17 @@ import org.apache.commons.lang3.StringUtils;
 public class RpnExpression {
 
     private String[] tokens;
-    private String ronExpression;
+    private String expression;
 
     public RpnExpression(String rpn) {
 
         if (StringUtils.isBlank(rpn)) {
             tokens = new String[0];
-            this.ronExpression = "";
+            this.expression = "";
 
         } else {
             tokens = rpn.trim().split("\\s+");
-            this.ronExpression = rpn;
+            this.expression = rpn;
         }
     }
 
@@ -46,8 +46,8 @@ public class RpnExpression {
         int tokenIndex = 0;
         int pos = 0;
 
-        while (pos < ronExpression.length()) {
-            while (pos < ronExpression.length() && ronExpression.charAt(pos) == ' ') {
+        while (pos < expression.length()) {
+            while (pos < expression.length() && expression.charAt(pos) == ' ') {
                 ++pos;
             }
             if (tokenIndex == tokenPos) {
@@ -55,7 +55,7 @@ public class RpnExpression {
             }
             ++tokenIndex;
 
-            while (pos < ronExpression.length() && ronExpression.charAt(pos) != ' ') {
+            while (pos < expression.length() && expression.charAt(pos) != ' ') {
                 ++pos;
             }
         }
