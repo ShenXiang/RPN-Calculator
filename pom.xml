@@ -62,6 +62,7 @@
                         <filter>
                             <artifact>*:*</artifact>
                             <excludes>
+                                <exclude>module-info.class</exclude>
                                 <exclude>META-INF/*.MF</exclude>
                             </excludes>
                         </filter>
